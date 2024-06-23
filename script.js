@@ -1,24 +1,36 @@
-function startTimer(duration, display) {
-    let timer = duration, hours, minutes, seconds;
-    setInterval(function () {
-        hours = parseInt(timer / 3600, 10);
-        minutes = parseInt((timer % 3600) / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+function startTimer(endTime, display) {
+    let timerInterval = setInterval(function () {
+        let now = new Date().getTime();
+        let distance = endTime - now;
+
+        if (distance < 0) {
+            clearInterval(timerInterval);
+            display.textContent = "00:00:00";
+            return;
+        }
+
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         hours = hours < 10 ? "0" + hours : hours;
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
         display.textContent = hours + ":" + minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-        }
     }, 1000);
 }
 
 window.onload = function () {
-    let countdownTime = 3600 * 240; // 3 hours in seconds
+    let countdownDuration = 3600 * 3 * 1000; // 3 hours in milliseconds
     let display = document.querySelector('#timer');
-    startTimer(countdownTime, display);
+
+    let endTime = localStorage.getItem('pixEndTime');
+
+    if (!endTime) {
+        endTime = new Date().getTime() + countdownDuration;
+        localStorage.setItem('pixEndTime', endTime);
+    }
+
+    startTimer(parseInt(endTime), display);
 };
