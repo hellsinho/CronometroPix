@@ -24,7 +24,7 @@ function startTimer(endTime, display) {
 }
 
 window.onload = function () {
-    let countdownDuration = 3600 * 3 * 1000; // 3 hours in milliseconds
+    let countdownDuration = 3600 * 240 * 1000; // 3 hours in milliseconds
     let display = document.querySelector('#timer');
 
     let endTime = localStorage.getItem('pixEndTime');
