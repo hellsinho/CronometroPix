@@ -5,19 +5,21 @@ function startTimer(endTime, display) {
 
         if (distance < 0) {
             clearInterval(timerInterval);
-            display.textContent = "00:00:00";
+            display.textContent = "00 dias 00:00:00";
             return;
         }
 
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
         let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+        days = days < 10 ? "0" + days : days;
         hours = hours < 10 ? "0" + hours : hours;
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = hours + ":" + minutes + ":" + seconds;
+        display.textContent = days + " dias " + hours + ":" + minutes + ":" + seconds;
     }, 1000);
 }
 
